@@ -18,14 +18,16 @@ from nti.appserver.tests.test_application import SharedApplicationTestBase, With
 
 from hamcrest import assert_that
 from hamcrest import is_
+from hamcrest import is_not as does_not
+from hamcrest import has_key
 from hamcrest import has_length
 from hamcrest import has_entry
 from hamcrest import has_entries
 from hamcrest import none
 
-class TestUsePreferencesViews(SharedApplicationTestBase):
+class TestPreferencesViews(SharedApplicationTestBase):
 
-	set_up_packages = SharedApplicationTestBase.set_up_packages + (('test_preferences_views.zcml', 'nti.appserver.utils.users.tests'),)
+	set_up_packages = SharedApplicationTestBase.set_up_packages + (('test_preferences_views.zcml', 'nti.app.client_preferences.tests'),)
 
 	@WithSharedApplicationMockDS(users=True,testapp=True)
 	def test_traverse_to_my_root_prefs(self):
@@ -42,6 +44,14 @@ class TestUsePreferencesViews(SharedApplicationTestBase):
 															   'Available': has_entry('status', 'Available'),
 															   'DND': has_entry('status', 'Do Not Disturb'),
 															   'Active': is_(dict)} ) }) )
+		# The hidden stuff is not present
+		assert_that( res.json_body['ZMISettings'],
+					 does_not( has_key( 'Hidden' ) ) )
+
+		# But the read-only stuff is
+		assert_that( res.json_body['ZMISettings'],
+					 has_key( 'ReadOnly' ) )
+
 	@WithSharedApplicationMockDS(users=True,testapp=True)
 	def test_update_chat_active_prefs(self):
 		href = '/dataserver2/users/sjohnson@nextthought.COM/++preferences++/ChatPresence/Active'
@@ -53,6 +63,13 @@ class TestUsePreferencesViews(SharedApplicationTestBase):
 								  has_entry( 'Active',
 											 has_entry( 'status', 'This is my new status' ) ) ) )
 
+	@WithSharedApplicationMockDS(users=True,testapp=True)
+	def test_cannot_update_read_only_prefs(self):
+		href = '/dataserver2/users/sjohnson@nextthought.COM/++preferences++/ZMISettings/ReadOnly'
+		self.testapp.get( href )
+		self.testapp.put_json( href,
+							   {'showZopeLogo': False },
+							   status=422 )
 
 	@WithSharedApplicationMockDS(users=True,testapp=True)
 	def test_traverse_to_my_zmi_prefs(self):
@@ -73,75 +90,3 @@ class TestUsePreferencesViews(SharedApplicationTestBase):
 		res = self._fetch_user_url( '/++preferences++/ZMISettings' )
 		assert_that( res.json_body,
 					 has_entries( 'skin', 'Basic' ) )
-
-
-
-	@WithSharedApplicationMockDS
-	def test_set_preferences(self):
-		with mock_dataserver.mock_db_trans(self.ds):
-			self._create_user()
-
-		testapp = TestApp(self.app)
-
-		path = '/dataserver2/users/sjohnson@nextthought.com/@@set_preferences'
-		environ = self._make_extra_environ()
-
-		data = to_json_representation({'shikai': 'ryujin jakka',
-									   'bankai': 'zanka no tachi',
-									   'power': 560 })
-
-		res = testapp.post(path, data, extra_environ=environ)
-		assert_that(res.status_int, is_(200))
-		d = simplejson.loads(res.body)
-		assert_that(d, has_entry(u'Items', has_length(3)))
-
-		path = '/dataserver2/users/sjohnson@nextthought.com/@@get_preferences'
-		res = testapp.get(path, extra_environ=environ)
-		assert_that(res.status_int, is_(200))
-		d = simplejson.loads(res.body)
-		assert_that(d, has_entry(u'Items', has_length(3)))
-		assert_that(d, has_entry(u'Items', has_entry('power', 560)))
-		assert_that(d, has_entry(u'Items', has_entry('shikai', 'ryujin jakka')))
-		assert_that(d, has_entry(u'Items', has_entry('bankai', 'zanka no tachi')))
-
-	@WithSharedApplicationMockDS
-	def test_delete_preferences(self):
-		with mock_dataserver.mock_db_trans(self.ds):
-			self._create_user()
-
-		testapp = TestApp(self.app)
-
-		path = '/dataserver2/users/sjohnson@nextthought.com/@@set_preferences'
-		environ = self._make_extra_environ()
-
-		data = to_json_representation({'shikai': 'ryujin jakka',
-									   'bankai': 'zanka no tachi',
-									   'power': 560 })
-
-		res = testapp.post(path, data, extra_environ=environ)
-		assert_that(res.status_int, is_(200))
-		d = simplejson.loads(res.body)
-		assert_that(d, has_entry(u'Items', has_length(3)))
-
-		path = '/dataserver2/users/sjohnson@nextthought.com/@@delete_preferences'
-		data = to_json_representation({'keys': 'power'})
-
-		res = testapp.delete(path, data, extra_environ=environ)
-		assert_that(res.status_int, is_(200))
-		d = simplejson.loads(res.body)
-		assert_that(d, has_entry(u'Items', has_length(2)))
-		assert_that(d, has_entry(u'Items', has_entry('shikai', 'ryujin jakka')))
-		assert_that(d, has_entry(u'Items', has_entry('bankai', 'zanka no tachi')))
-
-		data = to_json_representation({'shikai': 'ryujin jakka'})
-		res = testapp.delete(path, data, extra_environ=environ)
-		assert_that(res.status_int, is_(200))
-		d = simplejson.loads(res.body)
-		assert_that(d, has_entry(u'Items', has_length(1)))
-		assert_that(d, has_entry(u'Items', has_entry('bankai', 'zanka no tachi')))
-
-		data = to_json_representation({})
-		res = testapp.delete(path, data, extra_environ=environ)
-		assert_that(res.status_int, is_(200))
-		d = simplejson.loads(res.body)
-		assert_that(d, has_entry(u'Items', has_length(0)))

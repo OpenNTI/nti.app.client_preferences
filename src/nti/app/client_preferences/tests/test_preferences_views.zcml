@@ -12,15 +12,29 @@
 	<include package="zope.preference" file="meta.zcml" />
 	<include package="zope.preference" />
 
+	<include package="nti.app.client_preferences" />
+
 	<preferenceGroup
 		id='ZMISettings'
 		title='ZMI Settings'
-		schema='nti.externalization.tests.test_externalize_preferences.IZMIUserSettings'
+		schema='nti.app.client_preferences.tests.test_externalization.IZMIUserSettings'
 		category='true' />
 	<preferenceGroup
 		id='ZMISettings.Folder'
 		title='ZMI Settings'
-		schema='nti.externalization.tests.test_externalize_preferences.IFolderSettings'
+		schema='nti.app.client_preferences.tests.test_externalization.IFolderSettings'
 		category='true' />
+
+	<preferenceGroup
+		id='ZMISettings.ReadOnly'
+		title='Read Only Settings'
+		schema='nti.app.client_preferences.tests.test_externalization.IReadOnlySettings'
+		/>
+
+	<preferenceGroup
+		id='ZMISettings.Hidden'
+		title='Hidden Settings'
+		schema='nti.app.client_preferences.tests.test_externalization.IHiddenSettings'
+		/>
 
 </configure>

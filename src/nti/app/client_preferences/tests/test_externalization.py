@@ -32,8 +32,13 @@ from nti.externalization.internalization import update_from_external_object
 
 # First, define a basic preference schema
 import zope.interface
+from zope.interface.interface import taggedValue
 import zope.schema
-class IZMIUserSettings(zope.interface.Interface):
+
+class IBaseSettings(zope.interface.Interface):
+	taggedValue('__external_preference_group__', 'write' )
+
+class IZMIUserSettings(IBaseSettings):
 	"""Basic User Preferences"""
 	# The root
 
@@ -54,7 +59,8 @@ class IZMIUserSettings(zope.interface.Interface):
 				u"at the top of the screen.",
 		default=True)
 
-class IFolderSettings(zope.interface.Interface):
+
+class IFolderSettings(IBaseSettings):
 	"""Basic User Preferences"""
 	# A child
 
@@ -69,6 +75,22 @@ class IFolderSettings(zope.interface.Interface):
 		description=u"Data field to sort by.",
 		values=['name', 'size', 'creator'],
 		default='name')
+
+class IReadOnlySettings(zope.interface.Interface):
+	showZopeLogo = zope.schema.Bool(
+		title=u"Show Zope Logo",
+		description=u"Specifies whether Zope logo should be displayed "
+				u"at the top of the screen.",
+		default=True)
+	taggedValue('__external_preference_group__', 'read')
+
+class IHiddenSettings(zope.interface.Interface):
+	showZopeLogo = zope.schema.Bool(
+		title=u"Show Zope Logo",
+		description=u"Specifies whether Zope logo should be displayed "
+				u"at the top of the screen.",
+		default=True)
+	# No Tagged value
 
 from nti.externalization.tests import ConfiguringTestBase
 from nti.externalization.tests import externalizes

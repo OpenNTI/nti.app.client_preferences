@@ -11,6 +11,8 @@ preference objects themselves implement
 :class:`zope.preference.interfaces.IPreferenceGroup` as well as the
 schema for the preference value.
 
+See :class:`PreferenceGroupObjectIO` for more information.
+
 .. note:: Because the preference schema is also implemented by the preference object,
   one should generally not also have externalizers registered
   for that interface. In other words, using exactly the same interface for
@@ -35,6 +37,15 @@ from nti.externalization.externalization import toExternalObject
 from nti.externalization.internalization import update_from_external_object
 from nti.externalization.datastructures import InterfaceObjectIO
 
+from . interfaces import TAG_EXTERNAL_PREFERENCE_GROUP
+
+def _check_read( schema, allow=('read','write') ):
+	if schema is None:
+		return
+	for iface in schema.__iro__:
+		if iface.queryTaggedValue( TAG_EXTERNAL_PREFERENCE_GROUP ) in allow:
+			return
+	raise ValueError('Unreadable schema')
 
 @interface.implementer(IInternalObjectIO)
 @component.adapter(IPreferenceGroup)
@@ -44,10 +55,15 @@ class PreferenceGroupObjectIO(InterfaceObjectIO):
 	Our main job is to determine the correct schema to use and
 	find the sub-groups.
 
-	.. note:: Right now, we externalize any preference group and all
-		subgroups. If in the future some prefs are internal to the
-		server, we can and should add tagged data to the interfaces
-		to externalize.
+	Restrictions
+	============
+
+	Preference groups (other than the root group) will not be written
+	out unless their schema (or a parent schema) has a tagged value defined by
+	:const:`TAG_EXTERNAL_PREFERENCE_GROUP` equal to 'read'. If the preference
+	group should also be able to be updated by the client, the value
+	should be 'write'.
+
 
 	Class Names and MimeTypes
 	=========================
@@ -66,12 +82,13 @@ class PreferenceGroupObjectIO(InterfaceObjectIO):
 	# and the id will be blank
 
 	def __init__( self, context ):
+		_check_read( context.__schema__ )
 		super(PreferenceGroupObjectIO,self).__init__( context,
 													  iface_upper_bound=context.__schema__ or IPreferenceGroup )
 
 	@property
 	def __external_resolvers__(self):
-		"Sub-groups are resolved to the actual utility, if they exist"
+		"Sub-groups are resolved to the actual utility, if it exists and is writable"
 		# We have to update them from the external value as we
 		# get them because simply assigning the attribute on the PrefGroup
 		# does nothing. Because of this, we don't even need to include
@@ -105,6 +122,15 @@ class PreferenceGroupObjectIO(InterfaceObjectIO):
 		# this manually. See __external_resolvers__)
 		for local_name, group in context.items():
 			assert local_name not in result, "Invalid group name, developer error"
-			result[local_name] = toExternalObject( group )
+			try:
+				_check_read( group.__schema__ )
+			except ValueError:
+				pass
+			else:
+				result[local_name] = toExternalObject( group )
 
 		return result
+
+	def updateFromExternalObject(self, parsed, *args, **kwargs):
+		_check_read( self._ext_replacement().__schema__, allow=('write',) )
+		super(PreferenceGroupObjectIO,self).updateFromExternalObject(parsed, *args, **kwargs)
