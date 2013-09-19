@@ -1,6 +1,7 @@
 <!-- -*- mode: nxml -*- -->
 <configure xmlns="http://namespaces.zope.org/zope"
-		   xmlns:zcml="http://namespaces.zope.org/zcml">
+		   xmlns:zcml="http://namespaces.zope.org/zcml"
+		   i18n_domain='nti.dataserver'>
 	<include package="zope.component" />
 	<include package="zope.annotation" />
 	<include package="zope.security" />
@@ -17,6 +18,7 @@
 	<adapter for="zope.preference.interfaces.IPreferenceGroup"
 			 factory=".externalization.PreferenceGroupObjectIO" />
 
+
 	<include package="zope.component" file="meta.zcml" />
 	<include package="zope.security" file="meta.zcml" />
 	<include package="zope.component" />
@@ -24,6 +26,17 @@
 	<include package="zope.security" file="permissions.zcml"/>
 	<include package="zope.preference" file="meta.zcml" />
 	<include package="zope.preference" />
+
+	<!-- Set up our evolution support. -->
+	<include package="zope.generations" />
+    <include package="zope.generations" file="subscriber.zcml" />
+	<!--
+	Because we use dataserver objects like IUser,
+	we need to run after it runs in case the dataserver
+	code changed, so our name must sort after it.
+	-->
+	<utility factory=".generations.install.SchemaManager"
+			 name="nti.dataserver:nti.app.client_preferences" />
 
 	<!--
 	The root preference group for the "webapp."

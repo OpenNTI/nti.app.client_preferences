@@ -21,7 +21,7 @@ import nti.dataserver
 from nti.dataserver.users.preferences import EntityPreferences
 from nti.dataserver.users import interfaces as user_interfaces
 
-from nti.dataserver.generations.evolve41 import evolve, _Participation
+from ..evolve2 import evolve, _Participation
 
 from nti.dataserver.utils.example_database_initializer import ExampleDatabaseInitializer
 
@@ -59,12 +59,12 @@ _user_preferences = """
      }
 }"""
 
-class TestEvolve41(ConfiguringTestBase):
-	set_up_packages = (nti.dataserver, nti.appserver)
+class TestEvolve2(ConfiguringTestBase):
+	set_up_packages = (nti.dataserver, 'nti.app.client_preferences')
 
 	@hides_warnings
 	@WithMockDS
-	def test_evolve41(self):
+	def test_evolve2(self):
 		with mock_db_trans( ) as conn:
 			context = fudge.Fake().has_attr( connection=conn )
 			ExampleDatabaseInitializer(max_test_users=5,skip_passwords=True).install( context )
@@ -81,8 +81,8 @@ class TestEvolve41(ConfiguringTestBase):
 		with mock_db_trans( ) as conn:
 			ds_folder = context.connection.root()['nti.dataserver']
 			user = ds_folder['users']['jason.madden@nextthought.com']
-			
-			key = EntityPreferences.__module__ + '.' + EntityPreferences.__name__ 
+
+			key = EntityPreferences.__module__ + '.' + EntityPreferences.__name__
 			ep = getattr(json, '__annotations__', {}).get(key, None)
 			assert_that(ep, is_(none()))
 
@@ -91,7 +91,7 @@ class TestEvolve41(ConfiguringTestBase):
 
 			root_prefs = pref_interfaces.IUserPreferences(user)
 			assert_that(root_prefs.WebApp.preferFlashVideo, is_(True))
-			
+
 			assert_that(root_prefs.ChatPresence.Active.status, is_('Back from lunch'))
 			assert_that(root_prefs.ChatPresence.Available.status, is_('Back from lunch'))
 			assert_that(root_prefs.ChatPresence.Away.status, is_('Back from breakfast'))
