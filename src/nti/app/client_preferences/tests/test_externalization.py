@@ -28,7 +28,7 @@ from zope.preference import preference
 from zope.preference.interfaces import IPreferenceGroup
 from zope.component import provideUtility, provideAdapter
 
-from ..internalization import update_from_external_object
+from nti.externalization.internalization import update_from_external_object
 
 # First, define a basic preference schema
 import zope.interface
@@ -70,12 +70,11 @@ class IFolderSettings(zope.interface.Interface):
 		values=['name', 'size', 'creator'],
 		default='name')
 
-from . import ConfiguringTestBase
-from . import externalizes
+from nti.externalization.tests import ConfiguringTestBase
+from nti.externalization.tests import externalizes
 
 from zope.security.interfaces import NoInteraction
 import zope.security.management
-from zope.annotation.interfaces import IAttributeAnnotatable
 from zope.annotation.interfaces import IAnnotations
 from zope.annotation.attribute import AttributeAnnotations
 
@@ -91,6 +90,7 @@ def _PrincipalAnnotationFactory(prin, group):
 
 class TestExternalizePreferences(ConfiguringTestBase):
 
+	set_up_packages = ConfiguringTestBase.set_up_packages + ('nti.app.client_preferences',)
 
 	class Principal(object):
 		id = 'zope.user'

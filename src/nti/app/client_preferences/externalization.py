@@ -29,11 +29,11 @@ from zope import interface
 from zope import component
 from zope.preference.interfaces import IPreferenceGroup
 
-from .interfaces import IInternalObjectIO
-from .interfaces import StandardExternalFields
-from .externalization import toExternalObject
-from .internalization import update_from_external_object
-from .datastructures import InterfaceObjectIO
+from nti.externalization.interfaces import IInternalObjectIO
+from nti.externalization.interfaces import StandardExternalFields
+from nti.externalization.externalization import toExternalObject
+from nti.externalization.internalization import update_from_external_object
+from nti.externalization.datastructures import InterfaceObjectIO
 
 
 @interface.implementer(IInternalObjectIO)
@@ -43,6 +43,11 @@ class PreferenceGroupObjectIO(InterfaceObjectIO):
 	Externalizes preference groups using the existing interface schema.
 	Our main job is to determine the correct schema to use and
 	find the sub-groups.
+
+	.. note:: Right now, we externalize any preference group and all
+		subgroups. If in the future some prefs are internal to the
+		server, we can and should add tagged data to the interfaces
+		to externalize.
 
 	Class Names and MimeTypes
 	=========================
