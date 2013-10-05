@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nti.app.client_preferences 0.0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-10-04 13:36-0500\n"
+"POT-Creation-Date: 2013-10-05 10:46-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,13 +27,13 @@ msgid "Chat Presence Settings"
 msgstr ""
 
 #: src/nti/app/client_preferences/configure.zcml:65
-msgid "The Default Presence"
-msgstr ""
-
-#: src/nti/app/client_preferences/configure.zcml:65
 msgid ""
 "The presence to use when a user enters the application, potentially copied "
 "from another option or updated when the user updates"
+msgstr ""
+
+#: src/nti/app/client_preferences/configure.zcml:65
+msgid "The Default Presence"
 msgstr ""
 
 #: src/nti/app/client_preferences/configure.zcml:72
