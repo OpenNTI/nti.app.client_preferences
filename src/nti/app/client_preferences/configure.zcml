@@ -9,6 +9,8 @@
 	<include package="zope.security" />
 	<include package="zope.preference" file="meta.zcml" />
 	<include package="zope.preference" />
+	<include package="zope.i18n" file="meta.zcml" />
+	<include package="zope.i18n" />
 
 	<!--
 	FIXME: Right now, it is loading us, but we should be including it
