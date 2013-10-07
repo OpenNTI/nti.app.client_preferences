@@ -22,8 +22,6 @@ from hamcrest import none
 from hamcrest import has_entries
 from hamcrest import has_property
 
-import nti.tests
-
 from zope.preference import preference
 from zope.preference.interfaces import IPreferenceGroup
 from zope.component import provideUtility, provideAdapter
