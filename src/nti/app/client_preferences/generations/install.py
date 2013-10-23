@@ -22,7 +22,7 @@ class SchemaManager(BaseSchemaManager):
 		super(SchemaManager, self).__init__(
 			generation=generation,
 			minimum_generation=generation,
-			package_name='nti.app.client_preferences')
+			package_name='nti.app.client_preferences.generations')
 
 	def install( self, context ):
 		# Nothing to do initially.
