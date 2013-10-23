@@ -18,9 +18,6 @@ from zope.security.management import newInteraction, endInteraction
 import nti.appserver
 import nti.dataserver
 
-from nti.dataserver.users.preferences import EntityPreferences
-from nti.dataserver.users import interfaces as user_interfaces
-
 from ..evolve2 import evolve, _Participation
 
 from nti.dataserver.utils.example_database_initializer import ExampleDatabaseInitializer
@@ -65,13 +62,15 @@ class TestEvolve2(ConfiguringTestBase):
 	@hides_warnings
 	@WithMockDS
 	def test_evolve2(self):
+		key = 'nti.dataserver.users.preferences.EntityPreferences'
 		with mock_db_trans( ) as conn:
 			context = fudge.Fake().has_attr( connection=conn )
 			ExampleDatabaseInitializer(max_test_users=5,skip_passwords=True).install( context )
 
 			ds_folder = context.connection.root()['nti.dataserver']
 			user = ds_folder['users']['jason.madden@nextthought.com']
-			prefs = user_interfaces.IEntityPreferences(user)
+			annotations = user.__annotations__
+			prefs = annotations[key] = {}
 			prefs.update(json.loads(_user_preferences))
 
 		with mock_db_trans(  ) as conn:
@@ -82,8 +81,7 @@ class TestEvolve2(ConfiguringTestBase):
 			ds_folder = context.connection.root()['nti.dataserver']
 			user = ds_folder['users']['jason.madden@nextthought.com']
 
-			key = EntityPreferences.__module__ + '.' + EntityPreferences.__name__
-			ep = getattr(json, '__annotations__', {}).get(key, None)
+			ep = user.__annotations__.get(key, None)
 			assert_that(ep, is_(none()))
 
 			principal = IPrincipal(user)

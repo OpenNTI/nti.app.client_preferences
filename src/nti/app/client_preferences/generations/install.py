@@ -8,7 +8,7 @@ from __future__ import print_function, unicode_literals
 
 __docformat__ = 'restructuredtext'
 
-generation = 1
+generation = 2
 
 from zope.generations.generations import SchemaManager as BaseSchemaManager
 from zope.generations.interfaces import IInstallableSchemaManager
@@ -22,7 +22,7 @@ class SchemaManager(BaseSchemaManager):
 		super(SchemaManager, self).__init__(
 			generation=generation,
 			minimum_generation=generation,
-			package_name='.'.join( type(self).__module__.split('.')[:-1]))
+			package_name='nti.app.client_preferences')
 
 	def install( self, context ):
 		# Nothing to do initially.
