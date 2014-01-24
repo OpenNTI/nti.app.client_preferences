@@ -5,7 +5,7 @@ Support for viewing and updating preferences.
 
 $Id$
 """
-from __future__ import print_function, unicode_literals, absolute_import
+from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
@@ -33,7 +33,6 @@ def PreferencesGetView(request):
 	# TODO: We should supply etag and/or last modified for this
 	# (does the default etag kick in?)
 	return request.context
-
 
 @view_config(route_name='objects.generic.traversal',
 			 request_method='PUT',
