@@ -104,8 +104,8 @@ class PreferenceGroupObjectIO(InterfaceObjectIO):
 	# PrefGroup does so as well). But it does add the security of not
 	# being able to set a key that isn't in the interface
 
-	def toExternalObject(self, mergeFrom=None ):
-		result = super(PreferenceGroupObjectIO,self).toExternalObject( mergeFrom=mergeFrom )
+	def toExternalObject(self, mergeFrom=None, **kwargs):
+		result = super(PreferenceGroupObjectIO, self).toExternalObject(mergeFrom=mergeFrom, **kwargs)
 		context = self._ext_replacement()
 		group_id = context.__id__ or 'Root'
 		# Now fixup names
