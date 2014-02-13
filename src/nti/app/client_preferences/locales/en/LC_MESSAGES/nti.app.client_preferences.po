@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nti.app.client_preferences 0.0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-10-05 10:46-0500\n"
+"POT-Creation-Date: 2014-02-13 07:25-0600\n"
 "PO-Revision-Date: 2013-10-04 13:34-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -18,33 +18,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: src/nti/app/client_preferences/configure.zcml:52
+#: src/nti/app/client_preferences/configure.zcml:54
 msgid "WebApp Settings"
 msgstr ""
 
-#: src/nti/app/client_preferences/configure.zcml:60
+#: src/nti/app/client_preferences/configure.zcml:62
 msgid "Chat Presence Settings"
 msgstr ""
 
-#: src/nti/app/client_preferences/configure.zcml:65
+#: src/nti/app/client_preferences/configure.zcml:67
 msgid ""
 "The presence to use when a user enters the application, potentially "
 "copied from another option or updated when the user updates"
 msgstr ""
 
-#: src/nti/app/client_preferences/configure.zcml:65
+#: src/nti/app/client_preferences/configure.zcml:67
 msgid "The Default Presence"
 msgstr ""
 
-#: src/nti/app/client_preferences/configure.zcml:72
+#: src/nti/app/client_preferences/configure.zcml:74
 msgid "Available"
 msgstr ""
 
-#: src/nti/app/client_preferences/configure.zcml:78
+#: src/nti/app/client_preferences/configure.zcml:80
 msgid "Away"
 msgstr ""
 
-#: src/nti/app/client_preferences/configure.zcml:84
+#: src/nti/app/client_preferences/configure.zcml:86
 msgid "Do Not Disturb"
 msgstr ""
 
