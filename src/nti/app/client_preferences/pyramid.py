@@ -17,7 +17,7 @@ from nti.dataserver import authorization as nauth
 from zope.preference.interfaces import IPreferenceGroup
 # XXX: FIXME: Using private base views
 from nti.appserver._view_utils import AbstractAuthenticatedView
-from nti.appserver._view_utils import ModeledContentUploadRequestUtilsMixin
+from nti.app.externalization.view_mixins import ModeledContentUploadRequestUtilsMixin
 
 @view_config(route_name='objects.generic.traversal',
 			 request_method='GET',
