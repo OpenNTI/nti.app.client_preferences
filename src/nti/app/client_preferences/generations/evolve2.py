@@ -89,3 +89,6 @@ def evolve(context):
 		for user in users.values():
 			if nti_interfaces.IUser.providedBy(user):
 				migrate_preferences(user)
+
+	component.getGlobalSiteManager().unregisterUtility(ds_intid, zope.intid.IIntIds)
+	component.getGlobalSiteManager().unregisterUtility(ds_intid, zc_intid.IIntIds)

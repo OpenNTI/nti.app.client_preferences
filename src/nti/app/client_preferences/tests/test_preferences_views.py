@@ -1,20 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function, unicode_literals, absolute_import
+from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
-import simplejson
-
-from nti.externalization.externalization import to_json_representation
-
-from nti.appserver.tests.test_application import TestApp
-
-from nti.dataserver.tests import mock_dataserver
-from nti.appserver.tests.test_application import SharedApplicationTestBase, WithSharedApplicationMockDS
 
 from hamcrest import assert_that
 from hamcrest import is_
@@ -25,9 +17,31 @@ from hamcrest import has_entry
 from hamcrest import has_entries
 from hamcrest import none
 
-class TestPreferencesViews(SharedApplicationTestBase):
+from nti.app.testing.application_webtest import ApplicationLayerTest
+from nti.app.testing.application_webtest import ApplicationTestLayer
+from nti.app.testing.decorators import WithSharedApplicationMockDS
 
-	set_up_packages = SharedApplicationTestBase.set_up_packages + (('test_preferences_views.zcml', 'nti.app.client_preferences.tests'),)
+class PrefApplicationTestLayer(ApplicationTestLayer):
+
+	set_up_packages = (('test_preferences_views.zcml', 'nti.app.client_preferences.tests'),)
+
+	@classmethod
+	def setUp(cls):
+		cls.setUpPackages( )
+	@classmethod
+	def tearDown(cls):
+		# We don't actually tear this down, but it shouldn't matter, everithing
+		# is in our test namespace
+		pass
+	@classmethod
+	def testSetUp(cls):
+		pass
+	@classmethod
+	def testTearDown(cls):
+		pass
+
+class TestPreferencesViews(ApplicationLayerTest):
+	layer = PrefApplicationTestLayer
 
 	@WithSharedApplicationMockDS(users=True,testapp=True)
 	def test_traverse_to_my_root_prefs(self):

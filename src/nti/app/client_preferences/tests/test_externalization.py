@@ -90,7 +90,6 @@ class IHiddenSettings(zope.interface.Interface):
 		default=True)
 	# No Tagged value
 
-from nti.externalization.tests import ConfiguringTestBase
 from nti.externalization.tests import externalizes
 
 from zope.security.interfaces import NoInteraction
@@ -98,7 +97,7 @@ import zope.security.management
 from zope.annotation.interfaces import IAnnotations
 from zope.annotation.attribute import AttributeAnnotations
 
-from zope import interface
+from . import PreferenceLayerTest
 
 def _PrincipalAnnotationFactory(prin, group):
 	# The principal in the interaction must be annotatable
@@ -108,9 +107,7 @@ def _PrincipalAnnotationFactory(prin, group):
 	# an explicit factory.
 	return AttributeAnnotations(prin)
 
-class TestExternalizePreferences(ConfiguringTestBase):
-
-	set_up_packages = ConfiguringTestBase.set_up_packages + ('nti.app.client_preferences',)
+class TestExternalizePreferences(PreferenceLayerTest):
 
 	class Principal(object):
 		id = 'zope.user'
@@ -121,12 +118,17 @@ class TestExternalizePreferences(ConfiguringTestBase):
 			self.principal = p
 
 
+	settings = None
+
 	def setUp(self):
 		super(TestExternalizePreferences,self).setUp()
 		self._create_prefs()
 		provideAdapter( _PrincipalAnnotationFactory,
 						(self.Principal,IPreferenceGroup),
 						IAnnotations )
+
+	def tearDown(self):
+		zope.security.management.endInteraction()
 
 	def _create_prefs(self):
 

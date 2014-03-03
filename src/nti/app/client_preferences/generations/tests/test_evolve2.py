@@ -15,14 +15,12 @@ from zope.preference import interfaces as pref_interfaces
 from zope.security.interfaces import IPrincipal
 from zope.security.management import newInteraction, endInteraction
 
-import nti.appserver
 import nti.dataserver
 
 from ..evolve2 import evolve, _Participation
 
 from nti.dataserver.utils.example_database_initializer import ExampleDatabaseInitializer
 
-from nti.dataserver.tests.mock_dataserver import ConfiguringTestBase
 from nti.dataserver.tests.mock_dataserver import mock_db_trans, WithMockDS
 
 from nti.deprecated import hides_warnings
@@ -56,8 +54,9 @@ _user_preferences = """
      }
 }"""
 
-class TestEvolve2(ConfiguringTestBase):
-	set_up_packages = (nti.dataserver, 'nti.app.client_preferences')
+from ...tests import PreferenceLayerTest
+
+class TestEvolve2(PreferenceLayerTest):
 
 	@hides_warnings
 	@WithMockDS

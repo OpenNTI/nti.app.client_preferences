@@ -12,7 +12,6 @@ import nti.dataserver
 
 from nti.dataserver.users import interfaces as user_interfaces
 
-from nti.dataserver.tests.mock_dataserver import ConfiguringTestBase
 from nti.dataserver.tests.mock_dataserver import mock_db_trans, WithMockDS
 
 from hamcrest import assert_that
@@ -46,8 +45,11 @@ _user_preferences = """
      }
 }"""
 
-class TestInstall(ConfiguringTestBase):
-	set_up_packages = (nti.dataserver, 'nti.app.client_preferences')
+
+from ...tests import PreferenceLayerTest
+
+
+class TestInstall(PreferenceLayerTest):
 
 	@WithMockDS
 	def test_install(self):
