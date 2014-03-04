@@ -15,8 +15,8 @@ from pyramid.view import view_config
 from nti.dataserver import authorization as nauth
 
 from zope.preference.interfaces import IPreferenceGroup
-# XXX: FIXME: Using private base views
-from nti.appserver._view_utils import AbstractAuthenticatedView
+
+from nti.app.base.abstract_views import AbstractAuthenticatedView
 from nti.app.externalization.view_mixins import ModeledContentUploadRequestUtilsMixin
 
 @view_config(route_name='objects.generic.traversal',
