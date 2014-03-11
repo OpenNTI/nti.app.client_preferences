@@ -57,7 +57,7 @@
 		schema='.interfaces.IWebAppUserSettings'
 		category='true' />
 
-	<!-- The chat tree -->
+	<!-- The chat tree, used by all platforms. -->
 
 	<preferenceGroup
 		id='ChatPresence'
@@ -88,5 +88,21 @@
 		title="Do Not Disturb"
 		schema=".interfaces.IDNDChatPresenceSettings"
 		/>
+
+	<!--
+		 The push notification tree, also shared by all platforms,
+		 although not all platforms support all notification types.
+	-->
+
+	<preferenceGroup
+		id="PushNotifications"
+		title="Push Notification Settings"
+		schema=".interfaces.IPushNotificationSettings"
+		category="true" />
+	<preferenceGroup
+		id="PushNotifications.Email"
+		title="Email Notification Settings"
+		schema=".interfaces.IEmailPushNotificationSettings" />
+
 
 </configure>

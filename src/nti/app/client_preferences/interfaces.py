@@ -131,3 +131,57 @@ for iface in IAvailableChatPresenceSettings, IAwayChatPresenceSettings, IDNDChat
 		if iface[name].__dict__['default'] != iface[name].default:
 			del iface[name].defaultFactory
 	iface.changed(iface)
+del iface
+
+class IPushNotificationSettings(Interface):
+	"""
+	The root of the settings tree for push notifications.
+	Push notifications are defined as those that occur in channels outside
+	of the regular applications. Child groups of this tree will
+	have settings for particular types of push notifications,
+	such as email, APNS (iOS), APNS (Safari), etc.
+
+
+	Values defined here should be used to override values
+	defined at lower levels, so, for example, turning of push
+	notifications here turns them off for email, APNS, and other
+	types of notifications.
+
+	**Settings versus user profile fields**
+
+	User profile fields are convenient to work with in Python code, if
+	you have access to the specific User profile object. However, we
+	have a wide variety of user profile objects, and they MUST be
+	arranged in a strict hierarchy, so it's not clear where in that
+	site-specific hierarchy to put these type of settings. Profiles do
+	have the advantage of being easily queryable and even editable by
+	an administrator.
+
+	Preferences, OTOH, require beginning and ending a zope.security
+	interaction to gain access to. This is complicated to do in normal
+	request processing, and not recommended. However, for an action
+	that might need to send email to tens or hundreds of interested
+	parties, it wouldn't be recommended to do that in
+	request-processing code anyway. Instead, the request processing
+	code should do nothing more then enqueue the event somewhere, and
+	a different process should process this queue, one where beginning
+	and ending interactions should be substantially simpler.
+	"""
+	taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+
+	send_me_push_notifications = schema.Bool(title=_("Enable/disable all push notifications"),
+											 description=_("Overrides all specific types of push notifications"),
+											 default=True)
+
+class IEmailPushNotificationSettings(Interface):
+	"""
+	Push-notification settings specific to email.
+
+	The user's profile field for email address will generally be used; settings
+	defined here are related to when and what to send.
+	"""
+	taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+
+	email_a_summary_of_interesting_changes = schema.Bool(title=_("Send a summary of notable activity I may be interested in"),
+														 description=_('Control the sending of an email digest of activity/changes'),
+														 default=True)

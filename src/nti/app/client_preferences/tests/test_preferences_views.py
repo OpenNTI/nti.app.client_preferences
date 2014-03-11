@@ -47,17 +47,23 @@ class TestPreferencesViews(ApplicationLayerTest):
 	def test_traverse_to_my_root_prefs(self):
 		res = self._fetch_user_url( '/++preferences++' )
 		assert_that( res.json_body,
-					 has_entries( {u'Class': u'Preference_Root',
-								   u'href': u'/dataserver2/users/sjohnson@nextthought.COM/++preferences++',
-								   u'WebApp': has_entries( {u'Class': u'Preference_WebApp',
-															u'MimeType': u'application/vnd.nextthought.preference.webapp',
-															u'preferFlashVideo': False} ),
-								u'ChatPresence': has_entries( {u'Class': u'Preference_ChatPresence',
-															   u'MimeType': u'application/vnd.nextthought.preference.chatpresence',
-															   'Away': has_entry('status', 'Away'),
-															   'Available': has_entry('status', 'Available'),
-															   'DND': has_entry('status', 'Do Not Disturb'),
-															   'Active': is_(dict)} ) }) )
+					 has_entries( {'Class': 'Preference_Root',
+								   'href': '/dataserver2/users/sjohnson@nextthought.COM/++preferences++',
+								   'WebApp': has_entries( {'Class': 'Preference_WebApp',
+															'MimeType': 'application/vnd.nextthought.preference.webapp',
+															'preferFlashVideo': False} ),
+								   'ChatPresence': has_entries( {'Class': 'Preference_ChatPresence',
+																  'MimeType': 'application/vnd.nextthought.preference.chatpresence',
+																  'Away': has_entry('status', 'Away'),
+																  'Available': has_entry('status', 'Available'),
+																  'DND': has_entry('status', 'Do Not Disturb'),
+																  'Active': is_(dict)} ),
+								   'PushNotifications': has_entries( {'Class': 'Preference_PushNotifications',
+																	  'Email': {'Class': 'Preference_PushNotifications_Email',
+																				'MimeType': 'application/vnd.nextthought.preference.pushnotifications.email',
+																				'email_a_summary_of_interesting_changes': True},
+																	  'MimeType': 'application/vnd.nextthought.preference.pushnotifications',
+																	  'send_me_push_notifications': True}) }) )
 		# The hidden stuff is not present
 		assert_that( res.json_body['ZMISettings'],
 					 does_not( has_key( 'Hidden' ) ) )
