@@ -60,7 +60,7 @@ class IWebAppUserSettings(Interface):
 	"""
 
 	preferFlashVideo = schema.Bool(
-		title=_('Prefer Flash-based video instead of native HTML video when possible'),
+		title="Prefer Flash-based video instead of native HTML video when possible",
 		default=False)
 
 	taggedValue( TAG_EXTERNAL_PREFERENCE_GROUP, 'write' )
@@ -169,8 +169,8 @@ class IPushNotificationSettings(Interface):
 	"""
 	taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
 
-	send_me_push_notifications = schema.Bool(title=_("Enable/disable all push notifications"),
-											 description=_("Overrides all specific types of push notifications"),
+	send_me_push_notifications = schema.Bool(title="Enable/disable all push notifications",
+											 description="Overrides all specific types of push notifications",
 											 default=True)
 
 class IEmailPushNotificationSettings(Interface):
@@ -182,6 +182,6 @@ class IEmailPushNotificationSettings(Interface):
 	"""
 	taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
 
-	email_a_summary_of_interesting_changes = schema.Bool(title=_("Send a summary of notable activity I may be interested in"),
-														 description=_('Control the sending of an email digest of activity/changes'),
+	email_a_summary_of_interesting_changes = schema.Bool(title="Send a summary of notable activity I may be interested in",
+														 description="Control the sending of an email digest of activity/changes",
 														 default=True)

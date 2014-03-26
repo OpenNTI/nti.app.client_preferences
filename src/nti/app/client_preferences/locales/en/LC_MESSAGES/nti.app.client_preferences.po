@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nti.app.client_preferences 0.0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-11 14:29-0500\n"
+"POT-Creation-Date: 2014-03-26 10:45-0500\n"
 "PO-Revision-Date: 2013-10-04 13:34-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -17,75 +17,4 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
-
-#: src/nti/app/client_preferences/configure.zcml:54
-msgid "WebApp Settings"
-msgstr ""
-
-#: src/nti/app/client_preferences/configure.zcml:62
-msgid "Chat Presence Settings"
-msgstr ""
-
-#: src/nti/app/client_preferences/configure.zcml:67
-msgid ""
-"The presence to use when a user enters the application, potentially "
-"copied from another option or updated when the user updates"
-msgstr ""
-
-#: src/nti/app/client_preferences/configure.zcml:67
-msgid "The Default Presence"
-msgstr ""
-
-#: src/nti/app/client_preferences/configure.zcml:74
-msgid "Available"
-msgstr ""
-
-#: src/nti/app/client_preferences/configure.zcml:80
-msgid "Away"
-msgstr ""
-
-#: src/nti/app/client_preferences/configure.zcml:86
-msgid "Do Not Disturb"
-msgstr ""
-
-#: src/nti/app/client_preferences/configure.zcml:97
-msgid "Push Notification Settings"
-msgstr ""
-
-#: src/nti/app/client_preferences/configure.zcml:102
-msgid "Email Notification Settings"
-msgstr ""
-
-#: src/nti/app/client_preferences/interfaces.py:63
-msgid "Prefer Flash-based video instead of native HTML video when possible"
-msgstr ""
-
-#: src/nti/app/client_preferences/interfaces.py:172
-msgid "Enable/disable all push notifications"
-msgstr ""
-
-#: src/nti/app/client_preferences/interfaces.py:173
-msgid "Overrides all specific types of push notifications"
-msgstr ""
-
-#: src/nti/app/client_preferences/interfaces.py:185
-msgid "Send a summary of notable activity I may be interested in"
-msgstr ""
-
-#: src/nti/app/client_preferences/interfaces.py:186
-msgid "Control the sending of an email digest of activity/changes"
-msgstr ""
-
-#: src/nti/app/client_preferences/tests/test_preferences_views.zcml:17
-#: src/nti/app/client_preferences/tests/test_preferences_views.zcml:22
-msgid "ZMI Settings"
-msgstr ""
-
-#: src/nti/app/client_preferences/tests/test_preferences_views.zcml:28
-msgid "Read Only Settings"
-msgstr ""
-
-#: src/nti/app/client_preferences/tests/test_preferences_views.zcml:34
-msgid "Hidden Settings"
-msgstr ""
 
