@@ -36,7 +36,7 @@ Things to remember:
   over similar objects in :mod:`zope.schema` for better error messages,
   censoring support, etc.
 
-$Id$
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -46,9 +46,8 @@ logger = __import__('logging').getLogger(__name__)
 
 from zope.interface import Interface
 from zope.interface.interface import taggedValue
-from nti.utils import schema
 
-from . import MessageFactory as _
+from nti.utils import schema
 
 TAG_EXTERNAL_PREFERENCE_GROUP = '__external_preference_group__'
 
@@ -67,6 +66,7 @@ class IWebAppUserSettings(Interface):
 
 from nti.chatserver.interfaces import IUnattachedPresenceInfo
 IUnattachedPresenceInfo.setTaggedValue( TAG_EXTERNAL_PREFERENCE_GROUP, 'write' )
+
 from nti.contentfragments.interfaces import PlainTextContentFragment
 
 class IChatPresenceSettings(Interface):
