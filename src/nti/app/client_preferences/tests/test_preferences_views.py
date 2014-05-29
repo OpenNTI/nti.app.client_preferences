@@ -7,12 +7,10 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
-
 from hamcrest import assert_that
 from hamcrest import is_
 from hamcrest import is_not as does_not
 from hamcrest import has_key
-from hamcrest import has_length
 from hamcrest import has_entry
 from hamcrest import has_entries
 from hamcrest import none
@@ -63,7 +61,10 @@ class TestPreferencesViews(ApplicationLayerTest):
 																				'MimeType': 'application/vnd.nextthought.preference.pushnotifications.email',
 																				'email_a_summary_of_interesting_changes': True},
 																	  'MimeType': 'application/vnd.nextthought.preference.pushnotifications',
-																	  'send_me_push_notifications': True}) }) )
+																	  'send_me_push_notifications': True}),
+									'Badges': has_entries({'Class': 'Preference_IBadgeSettingss',
+														   'MimeType': 'application/vnd.nextthought.preference.badges',
+															'show_course_badges': False}) }))
 		# The hidden stuff is not present
 		assert_that( res.json_body['ZMISettings'],
 					 does_not( has_key( 'Hidden' ) ) )

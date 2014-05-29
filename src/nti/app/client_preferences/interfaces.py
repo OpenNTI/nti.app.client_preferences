@@ -185,3 +185,13 @@ class IEmailPushNotificationSettings(Interface):
 	email_a_summary_of_interesting_changes = schema.Bool(title="Send a summary of notable activity I may be interested in",
 														 description="Control the sending of an email digest of activity/changes",
 														 default=True)
+
+class IBadgeSettings(Interface):
+	"""
+	The root of the settings tree for badges
+	"""
+	taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+
+	show_course_badges = schema.Bool(title="Enable/disable showing course badges",
+									 description="Enable/disable showing course badges",
+									 default=False)

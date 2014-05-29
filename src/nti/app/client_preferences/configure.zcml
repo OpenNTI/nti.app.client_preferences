@@ -105,4 +105,14 @@
 		schema=".interfaces.IEmailPushNotificationSettings" />
 
 
+	<!--
+		 The badge preference group.
+	-->
+
+	<preferenceGroup
+		id="Badges"
+		title="Badge Settings"
+		schema=".interfaces.IBadgeSettings"
+		category="true" />
+
 </configure>
