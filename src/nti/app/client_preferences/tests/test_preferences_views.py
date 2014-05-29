@@ -61,10 +61,7 @@ class TestPreferencesViews(ApplicationLayerTest):
 																				'MimeType': 'application/vnd.nextthought.preference.pushnotifications.email',
 																				'email_a_summary_of_interesting_changes': True},
 																	  'MimeType': 'application/vnd.nextthought.preference.pushnotifications',
-																	  'send_me_push_notifications': True}),
-									'Badges': has_entries({'Class': 'Preference_IBadgeSettingss',
-														   'MimeType': 'application/vnd.nextthought.preference.badges',
-															'show_course_badges': False}) }))
+																	  'send_me_push_notifications': True}) }))
 		# The hidden stuff is not present
 		assert_that( res.json_body['ZMISettings'],
 					 does_not( has_key( 'Hidden' ) ) )
