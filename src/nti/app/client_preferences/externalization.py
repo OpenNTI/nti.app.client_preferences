@@ -19,7 +19,7 @@ See :class:`PreferenceGroupObjectIO` for more information.
   a preference schema as is implemented by a model object is probably not a good
   idea.
 
-$Id$
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -32,10 +32,10 @@ from zope import component
 from zope.preference.interfaces import IPreferenceGroup
 
 from nti.externalization.interfaces import IInternalObjectIO
-from nti.externalization.interfaces import StandardExternalFields
-from nti.externalization.externalization import toExternalObject
-from nti.externalization.internalization import update_from_external_object
 from nti.externalization.datastructures import InterfaceObjectIO
+from nti.externalization.interfaces import StandardExternalFields
+from nti.externalization.externalization import to_external_object
+from nti.externalization.internalization import update_from_external_object
 
 from . interfaces import TAG_EXTERNAL_PREFERENCE_GROUP
 
@@ -127,7 +127,7 @@ class PreferenceGroupObjectIO(InterfaceObjectIO):
 			except ValueError:
 				pass
 			else:
-				result[local_name] = toExternalObject( group )
+				result[local_name] = to_external_object(group)
 
 		return result
 

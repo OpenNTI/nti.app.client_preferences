@@ -3,8 +3,9 @@
 """
 Support for viewing and updating preferences.
 
-$Id$
+.. $Id$
 """
+
 from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
@@ -39,7 +40,7 @@ def PreferencesGetView(request):
 			 renderer='rest',
 			 context=IPreferenceGroup,
 			 permission=nauth.ACT_UPDATE)
-class PreferencesPutView(AbstractAuthenticatedView,ModeledContentUploadRequestUtilsMixin):
+class PreferencesPutView(AbstractAuthenticatedView, ModeledContentUploadRequestUtilsMixin):
 	# Although this is the UPDATE permission,
 	# the prefs being updated are always those of the current user
 	# implicitly, regardless of traversal path. We could add
@@ -47,5 +48,4 @@ class PreferencesPutView(AbstractAuthenticatedView,ModeledContentUploadRequestUt
 	# but that would be primarily for aesthetics
 	def __call__(self):
 		externalValue = self.readInput( )
-
-		return self.updateContentObject( self.request.context, externalValue, notify=False )
+		return self.updateContentObject(self.request.context, externalValue, notify=False)

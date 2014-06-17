@@ -42,12 +42,10 @@ Things to remember:
 from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-logger = __import__('logging').getLogger(__name__)
-
 from zope.interface import Interface
 from zope.interface.interface import taggedValue
 
-from nti.utils import schema
+from nti.schema.field import Bool
 
 TAG_EXTERNAL_PREFERENCE_GROUP = '__external_preference_group__'
 
@@ -58,7 +56,7 @@ class IWebAppUserSettings(Interface):
 	naming.
 	"""
 
-	preferFlashVideo = schema.Bool(
+	preferFlashVideo = Bool(
 		title="Prefer Flash-based video instead of native HTML video when possible",
 		default=False)
 
@@ -114,7 +112,6 @@ class IAwayChatPresenceSettings(IUnattachedPresenceInfo):
 IAwayChatPresenceSettings['status'].default = PlainTextContentFragment('Away')
 IAwayChatPresenceSettings['show'].default = 'away'
 
-
 class IDNDChatPresenceSettings(IUnattachedPresenceInfo):
 	"""Provide the defaults for the DND state"""
 
@@ -169,9 +166,9 @@ class IPushNotificationSettings(Interface):
 	"""
 	taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
 
-	send_me_push_notifications = schema.Bool(title="Enable/disable all push notifications",
-											 description="Overrides all specific types of push notifications",
-											 default=True)
+	send_me_push_notifications = Bool(title="Enable/disable all push notifications",
+								 	  description="Overrides all specific types of push notifications",
+									  default=True)
 
 class IEmailPushNotificationSettings(Interface):
 	"""
@@ -182,6 +179,6 @@ class IEmailPushNotificationSettings(Interface):
 	"""
 	taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
 
-	email_a_summary_of_interesting_changes = schema.Bool(title="Send a summary of notable activity I may be interested in",
-														 description="Control the sending of an email digest of activity/changes",
-														 default=True)
+	email_a_summary_of_interesting_changes = Bool(title="Send a summary of notable activity I may be interested in",
+											 	  description="Control the sending of an email digest of activity/changes",
+												  default=True)
