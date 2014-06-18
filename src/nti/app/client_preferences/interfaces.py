@@ -32,7 +32,7 @@ Things to remember:
   have defaults specified on a site-by-site basis, and even at particular
   nodes in the URL tree (for example, the default sort order for
   forums might be different than for UGD).
-* When defining fields, prefer the objects in :mod:`nti.utils.schema`
+* When defining fields, prefer the objects in :mod:`nti.schema`
   over similar objects in :mod:`zope.schema` for better error messages,
   censoring support, etc.
 
