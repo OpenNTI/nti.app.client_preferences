@@ -7,17 +7,17 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
-from hamcrest import assert_that
 from hamcrest import is_
-from hamcrest import is_not as does_not
+from hamcrest import none
 from hamcrest import has_key
 from hamcrest import has_entry
 from hamcrest import has_entries
-from hamcrest import none
+from hamcrest import assert_that
+from hamcrest import is_not as does_not
 
+from nti.app.testing.decorators import WithSharedApplicationMockDS
 from nti.app.testing.application_webtest import ApplicationLayerTest
 from nti.app.testing.application_webtest import ApplicationTestLayer
-from nti.app.testing.decorators import WithSharedApplicationMockDS
 
 class PrefApplicationTestLayer(ApplicationTestLayer):
 
@@ -49,7 +49,8 @@ class TestPreferencesViews(ApplicationLayerTest):
 								   'href': '/dataserver2/users/sjohnson@nextthought.COM/++preferences++',
 								   'WebApp': has_entries( {'Class': 'Preference_WebApp',
 															'MimeType': 'application/vnd.nextthought.preference.webapp',
-															'preferFlashVideo': False} ),
+															'preferFlashVideo': False,
+															'useHighContrast': False} ),
 								   'ChatPresence': has_entries( {'Class': 'Preference_ChatPresence',
 																  'MimeType': 'application/vnd.nextthought.preference.chatpresence',
 																  'Away': has_entry('status', 'Away'),

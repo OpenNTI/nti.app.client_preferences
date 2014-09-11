@@ -60,6 +60,10 @@ class IWebAppUserSettings(Interface):
 		title="Prefer Flash-based video instead of native HTML video when possible",
 		default=False)
 
+	useHighContrast = Bool(
+		title="Use high contrast",
+		default=False, required=False)
+	
 	taggedValue( TAG_EXTERNAL_PREFERENCE_GROUP, 'write' )
 
 from nti.chatserver.interfaces import IUnattachedPresenceInfo

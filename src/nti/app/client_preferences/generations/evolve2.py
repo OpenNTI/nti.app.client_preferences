@@ -18,7 +18,7 @@ from zope import component
 from zope import interface
 from zope.component.hooks import site, setHooks
 
-from zope.preference import interfaces as pref_interfaces
+from zope.preference.interfaces import IUserPreferences
 
 from zope.security.interfaces import IPrincipal
 from zope.security.interfaces import IParticipation
@@ -29,8 +29,7 @@ from zc import intid as zc_intid
 
 from nti.contentfragments.interfaces import PlainTextContentFragment
 
-from nti.dataserver import interfaces as nti_interfaces
-
+from nti.dataserver.interfaces import IUser
 
 @interface.implementer(IParticipation)
 class _Participation(object):
@@ -50,7 +49,7 @@ def migrate_preferences(user):
 		if ep is None:
 			return
 
-		root_prefs = pref_interfaces.IUserPreferences(user)
+		root_prefs = IUserPreferences(user)
 
 		kalturaPreferFlash = ep.get('webapp_kalturaPreferFlash', ep.get('kalturaPreferFlash'))
 		if kalturaPreferFlash is not None:
@@ -87,7 +86,7 @@ def evolve(context):
 		assert component.getSiteManager() == ds_folder.getSiteManager(), "Hooks not installed?"
 		users = ds_folder['users']
 		for user in users.values():
-			if nti_interfaces.IUser.providedBy(user):
+			if IUser.providedBy(user):
 				migrate_preferences(user)
 
 	component.getGlobalSiteManager().unregisterUtility(ds_intid, zope.intid.IIntIds)
