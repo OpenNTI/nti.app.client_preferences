@@ -74,7 +74,7 @@
 	<preferenceGroup
 		id="ChatPresence.Available"
 		title="Available"
-		schema=".interfaces..IAvailableChatPresenceSettings"
+		schema=".interfaces.IAvailableChatPresenceSettings"
 		/>
 
 	<preferenceGroup
