@@ -67,7 +67,7 @@ class TestEvolve2(PreferenceLayerTest):
 			ExampleDatabaseInitializer(max_test_users=5,skip_passwords=True).install( context )
 
 			ds_folder = context.connection.root()['nti.dataserver']
-			user = ds_folder['users']['jason.madden@nextthought.com']
+			user = ds_folder['users']['jason.madden']
 			annotations = user.__annotations__
 			prefs = annotations[key] = {}
 			prefs.update(json.loads(_user_preferences))
@@ -78,7 +78,7 @@ class TestEvolve2(PreferenceLayerTest):
 
 		with mock_db_trans( ) as conn:
 			ds_folder = context.connection.root()['nti.dataserver']
-			user = ds_folder['users']['jason.madden@nextthought.com']
+			user = ds_folder['users']['jason.madden']
 
 			ep = user.__annotations__.get(key, None)
 			assert_that(ep, is_(none()))
