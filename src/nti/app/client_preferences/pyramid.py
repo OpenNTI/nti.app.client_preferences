@@ -13,12 +13,13 @@ logger = __import__('logging').getLogger(__name__)
 
 from pyramid.view import view_config
 
-from nti.dataserver import authorization as nauth
-
 from zope.preference.interfaces import IPreferenceGroup
 
 from nti.app.base.abstract_views import AbstractAuthenticatedView
+
 from nti.app.externalization.view_mixins import ModeledContentUploadRequestUtilsMixin
+
+from nti.dataserver import authorization as nauth
 
 @view_config(route_name='objects.generic.traversal',
 			 request_method='GET',
@@ -40,7 +41,8 @@ def PreferencesGetView(request):
 			 renderer='rest',
 			 context=IPreferenceGroup,
 			 permission=nauth.ACT_UPDATE)
-class PreferencesPutView(AbstractAuthenticatedView, ModeledContentUploadRequestUtilsMixin):
+class PreferencesPutView(AbstractAuthenticatedView, 
+						 ModeledContentUploadRequestUtilsMixin):
 	# Although this is the UPDATE permission,
 	# the prefs being updated are always those of the current user
 	# implicitly, regardless of traversal path. We could add

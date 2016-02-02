@@ -27,17 +27,21 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from zope import interface
 from zope import component
+from zope import interface
+
 from zope.preference.interfaces import IPreferenceGroup
 
-from nti.externalization.interfaces import IInternalObjectIO
 from nti.externalization.datastructures import InterfaceObjectIO
-from nti.externalization.interfaces import StandardExternalFields
+
 from nti.externalization.externalization import to_external_object
+
+from nti.externalization.interfaces import IInternalObjectIO
+from nti.externalization.interfaces import StandardExternalFields
+
 from nti.externalization.internalization import update_from_external_object
 
-from . interfaces import TAG_EXTERNAL_PREFERENCE_GROUP
+from nti.app.client_preferences.interfaces import TAG_EXTERNAL_PREFERENCE_GROUP
 
 def _check_read( schema, allow=('read','write') ):
 	if schema is None:
@@ -108,6 +112,7 @@ class PreferenceGroupObjectIO(InterfaceObjectIO):
 		result = super(PreferenceGroupObjectIO, self).toExternalObject(mergeFrom=mergeFrom, **kwargs)
 		context = self._ext_replacement()
 		group_id = context.__id__ or 'Root'
+
 		# Now fixup names
 		# For class, '.' is often used as a delimiter in programming languages, and
 		# we don't want to force everyone to mirror our hierarchy. So we use _.
