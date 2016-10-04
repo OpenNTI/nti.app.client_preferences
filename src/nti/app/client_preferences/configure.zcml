@@ -5,7 +5,6 @@
 		   i18n_domain='nti.app.client_preferences'
 		   i18n:domain='nti.app.client_preferences'>
 
-	<include package="zope.component" />
 	<include package="zope.annotation" />
 	<include package="zope.security" />
 
