@@ -23,7 +23,7 @@ from nti.dataserver.utils.example_database_initializer import ExampleDatabaseIni
 
 from nti.dataserver.tests.mock_dataserver import mock_db_trans, WithMockDS
 
-from nti.deprecated import hides_warnings
+from nti.common.deprecated import hides_warnings
 
 from hamcrest import (assert_that, none, is_)
 
