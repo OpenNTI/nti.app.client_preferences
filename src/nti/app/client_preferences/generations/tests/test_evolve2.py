@@ -19,11 +19,11 @@ import nti.dataserver
 
 from ..evolve2 import evolve, _Participation
 
+from nti.base.deprecation import hides_warnings
+
 from nti.dataserver.utils.example_database_initializer import ExampleDatabaseInitializer
 
 from nti.dataserver.tests.mock_dataserver import mock_db_trans, WithMockDS
-
-from nti.common.deprecated import hides_warnings
 
 from hamcrest import (assert_that, none, is_)
 
