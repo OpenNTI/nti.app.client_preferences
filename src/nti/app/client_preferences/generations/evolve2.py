@@ -5,7 +5,8 @@ Generation 2 evolver, which migrates user preferences
 
 .. $Id$
 """
-from __future__ import print_function, unicode_literals, absolute_import, division
+
+from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
@@ -32,63 +33,69 @@ from nti.contentfragments.interfaces import PlainTextContentFragment
 
 from nti.dataserver.interfaces import IUser
 
+
 @interface.implementer(IParticipation)
 class _Participation(object):
 
-	__slots__ = 'interaction', 'principal'
+    __slots__ = ('interaction', 'principal')
 
-	def __init__(self, principal):
-		self.interaction = None
-		self.principal = principal
+    def __init__(self, principal):
+        self.interaction = None
+        self.principal = principal
+
 
 def migrate_preferences(user):
-	principal = IPrincipal(user)
-	newInteraction(_Participation(principal))
-	try:
-		key = 'nti.dataserver.users.preferences.EntityPreferences'
-		ep = getattr(user, '__annotations__', {}).get(key, None)
-		if ep is None:
-			return
+    principal = IPrincipal(user)
+    newInteraction(_Participation(principal))
+    try:
+        key = 'nti.dataserver.users.preferences.EntityPreferences'
+        ep = getattr(user, '__annotations__', {}).get(key, None)
+        if ep is None:
+            return
 
-		root_prefs = IUserPreferences(user)
+        root_prefs = IUserPreferences(user)
 
-		kalturaPreferFlash = ep.get('webapp_kalturaPreferFlash', ep.get('kalturaPreferFlash'))
-		if kalturaPreferFlash is not None:
-			webapp = root_prefs.WebApp
-			webapp.preferFlashVideo = kalturaPreferFlash
+        kalturaPreferFlash = ep.get('webapp_kalturaPreferFlash', None) \
+                          or ep.get('kalturaPreferFlash')
+        if kalturaPreferFlash is not None:
+            webapp = root_prefs.WebApp
+            webapp.preferFlashVideo = kalturaPreferFlash
 
-		presence = ep.get('presence', {})
-		current = presence.get('active')
-		if current and current in presence:
-			status = presence.get(current, {}).get('status')
-			if status:
-				root_prefs.ChatPresence.Active.status = PlainTextContentFragment(status)
+        presence = ep.get('presence', {})
+        current = presence.get('active')
+        if current and current in presence:
+            status = presence.get(current, {}).get('status')
+            if status:
+                root_prefs.ChatPresence.Active.status = PlainTextContentFragment(
+                    status)
 
-		for name in ('Available', 'Away', 'DND'):
-			status = presence.get(name.lower(), {}).get('status')
-			pref_grp = getattr(root_prefs.ChatPresence, name)
-			if status:
-				pref_grp.status = PlainTextContentFragment(status)
+        for name in ('Available', 'Away', 'DND'):
+            status = presence.get(name.lower(), {}).get('status')
+            pref_grp = getattr(root_prefs.ChatPresence, name)
+            if status:
+                pref_grp.status = PlainTextContentFragment(status)
 
-		del user.__annotations__[key]
-	finally:
-		endInteraction()
+        del user.__annotations__[key]
+    finally:
+        endInteraction()
+
 
 def evolve(context):
-	setHooks()
-	ds_folder = context.connection.root()['nti.dataserver']
-	lsm = ds_folder.getSiteManager()
+    setHooks()
+    ds_folder = context.connection.root()['nti.dataserver']
+    lsm = ds_folder.getSiteManager()
 
-	ds_intid = lsm.getUtility(provided=zope.intid.IIntIds)
-	component.provideUtility(ds_intid, zope.intid.IIntIds)
-	component.provideUtility(ds_intid, zc_intid.IIntIds)
+    ds_intid = lsm.getUtility(provided=zope.intid.IIntIds)
+    component.provideUtility(ds_intid, zope.intid.IIntIds)
+    component.provideUtility(ds_intid, zc_intid.IIntIds)
 
-	with site(ds_folder):
-		assert component.getSiteManager() == ds_folder.getSiteManager(), "Hooks not installed?"
-		users = ds_folder['users']
-		for user in users.values():
-			if IUser.providedBy(user):
-				migrate_preferences(user)
+    with site(ds_folder):
+        assert component.getSiteManager() == ds_folder.getSiteManager(), \
+               "Hooks not installed?"
+        users = ds_folder['users']
+        for user in users.values():
+            if IUser.providedBy(user):
+                migrate_preferences(user)
 
-	component.getGlobalSiteManager().unregisterUtility(ds_intid, zope.intid.IIntIds)
-	component.getGlobalSiteManager().unregisterUtility(ds_intid, zc_intid.IIntIds)
+    component.getGlobalSiteManager().unregisterUtility(ds_intid, zope.intid.IIntIds)
+    component.getGlobalSiteManager().unregisterUtility(ds_intid, zc_intid.IIntIds)

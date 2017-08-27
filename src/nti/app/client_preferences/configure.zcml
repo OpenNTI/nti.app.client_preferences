@@ -17,8 +17,8 @@
 	<!--
 	FIXME: Right now, it is loading us, but we should be including it
 	-->
-
 	<include package="nti.externalization" />
+
 	<i18n:registerTranslations directory="locales" />
 	<!-- Preferences -->
 	<adapter for="zope.preference.interfaces.IPreferenceGroup"

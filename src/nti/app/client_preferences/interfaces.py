@@ -39,7 +39,7 @@ Things to remember:
 .. $Id$
 """
 
-from __future__ import print_function, unicode_literals, absolute_import, division
+from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
 from zope.interface import Interface
@@ -50,140 +50,155 @@ from nti.schema.field import Bool
 
 TAG_EXTERNAL_PREFERENCE_GROUP = '__external_preference_group__'
 
+
 class IWebAppUserSettings(Interface):
-	"""
-	The root of the settings tree for browser-application
-	specific preferences. See comments in the ZCML file for
-	naming.
-	"""
+    """
+    The root of the settings tree for browser-application
+    specific preferences. See comments in the ZCML file for
+    naming.
+    """
 
-	preferFlashVideo = Bool(
-		title="Prefer Flash-based video instead of native HTML video when possible",
-		default=False)
+    preferFlashVideo = Bool(
+        title=u"Prefer Flash-based video instead of native HTML video when possible",
+        default=False)
 
-	useHighContrast = Bool(
-		title="Use high contrast",
-		default=False, required=False)
-	
-	taggedValue( TAG_EXTERNAL_PREFERENCE_GROUP, 'write' )
+    useHighContrast = Bool(title=u"Use high contrast",
+                           default=False,
+                           required=False)
+
+    taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+
 
 from nti.chatserver.interfaces import IUnattachedPresenceInfo
-IUnattachedPresenceInfo.setTaggedValue( TAG_EXTERNAL_PREFERENCE_GROUP, 'write' )
+IUnattachedPresenceInfo.setTaggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
 
 from nti.contentfragments.interfaces import PlainTextContentFragment
 
+
 class IChatPresenceSettings(Interface):
-	"""
-	A child of the root, specifying chat presence defaults.
+    """
+    A child of the root, specifying chat presence defaults.
 
-	This interface itself is blank; instead, its values
-	are defined as child groups. Each group corresponds to
-	a "preset" that the user can choose from. The "Active"
-	preset is the one to use when the user enters the application;
-	the other presets define what happens when the user selects the
-	corresponding preset.
+    This interface itself is blank; instead, its values
+    are defined as child groups. Each group corresponds to
+    a "preset" that the user can choose from. The "Active"
+    preset is the one to use when the user enters the application;
+    the other presets define what happens when the user selects the
+    corresponding preset.
 
-	When the user picks a preset, the Active group should be updated
-	by copying the preset. If the user customizes their state, those
-	customizations can be recorded in the Active group.
+    When the user picks a preset, the Active group should be updated
+    by copying the preset. If the user customizes their state, those
+    customizations can be recorded in the Active group.
 
-	Subgroups may include: DND, Available, Away (but see the ZCML
-	file for definitions).
+    Subgroups may include: DND, Available, Away (but see the ZCML
+    file for definitions).
 
-	"""
-	taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+    """
+    taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
 
 # Below we're going out of our way to reuse the existing
 # presence info class and fields so that we're sure
 # they match the constraints actually enforced by the
 # chatserver. Most new preferences won't need to do this
 
-class IAvailableChatPresenceSettings(IUnattachedPresenceInfo):
-	"""Provide the defaults for the Available state"""
 
-	show = IUnattachedPresenceInfo['show'].bind(None)
-	status = IUnattachedPresenceInfo['status'].bind(None)
-	taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+class IAvailableChatPresenceSettings(IUnattachedPresenceInfo):
+    """
+    Provide the defaults for the Available state
+    """
+
+    show = IUnattachedPresenceInfo['show'].bind(None)
+    status = IUnattachedPresenceInfo['status'].bind(None)
+    taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+
 
 IAvailableChatPresenceSettings['status'].default = PlainTextContentFragment('Available')
 
-class IAwayChatPresenceSettings(IUnattachedPresenceInfo):
-	"""Provide the defaults for the Away state"""
 
-	show = IUnattachedPresenceInfo['show'].bind(None)
-	status = IUnattachedPresenceInfo['status'].bind(None)
-	taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+class IAwayChatPresenceSettings(IUnattachedPresenceInfo):
+    """
+    Provide the defaults for the Away state
+    """
+
+    show = IUnattachedPresenceInfo['show'].bind(None)
+    status = IUnattachedPresenceInfo['status'].bind(None)
+    taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
 
 IAwayChatPresenceSettings['status'].default = PlainTextContentFragment('Away')
 IAwayChatPresenceSettings['show'].default = 'away'
 
-class IDNDChatPresenceSettings(IUnattachedPresenceInfo):
-	"""Provide the defaults for the DND state"""
 
-	show = IUnattachedPresenceInfo['show'].bind(None)
-	status = IUnattachedPresenceInfo['status'].bind(None)
-	taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+class IDNDChatPresenceSettings(IUnattachedPresenceInfo):
+    """
+    Provide the defaults for the DND state
+    """
+    show = IUnattachedPresenceInfo['show'].bind(None)
+    status = IUnattachedPresenceInfo['status'].bind(None)
+    taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+
 
 IDNDChatPresenceSettings['status'].default = PlainTextContentFragment('Do Not Disturb')
 IDNDChatPresenceSettings['show'].default = 'dnd'
 
 for iface in IAvailableChatPresenceSettings, IAwayChatPresenceSettings, IDNDChatPresenceSettings:
-	for name in 'show', 'status':
-		iface[name].interface = iface
-		if iface[name].__dict__['default'] != iface[name].default:
-			del iface[name].defaultFactory
-	iface.changed(iface)
+    for name in 'show', 'status':
+        iface[name].interface = iface
+        if iface[name].__dict__['default'] != iface[name].default:
+            del iface[name].defaultFactory
+    iface.changed(iface)
 del iface
 
+
 class IPushNotificationSettings(Interface):
-	"""
-	The root of the settings tree for push notifications.
-	Push notifications are defined as those that occur in channels outside
-	of the regular applications. Child groups of this tree will
-	have settings for particular types of push notifications,
-	such as email, APNS (iOS), APNS (Safari), etc.
+    """
+    The root of the settings tree for push notifications.
+    Push notifications are defined as those that occur in channels outside
+    of the regular applications. Child groups of this tree will
+    have settings for particular types of push notifications,
+    such as email, APNS (iOS), APNS (Safari), etc.
 
 
-	Values defined here should be used to override values
-	defined at lower levels, so, for example, turning of push
-	notifications here turns them off for email, APNS, and other
-	types of notifications.
+    Values defined here should be used to override values
+    defined at lower levels, so, for example, turning of push
+    notifications here turns them off for email, APNS, and other
+    types of notifications.
 
-	**Settings versus user profile fields**
+    **Settings versus user profile fields**
 
-	User profile fields are convenient to work with in Python code, if
-	you have access to the specific User profile object. However, we
-	have a wide variety of user profile objects, and they MUST be
-	arranged in a strict hierarchy, so it's not clear where in that
-	site-specific hierarchy to put these type of settings. Profiles do
-	have the advantage of being easily queryable and even editable by
-	an administrator.
+    User profile fields are convenient to work with in Python code, if
+    you have access to the specific User profile object. However, we
+    have a wide variety of user profile objects, and they MUST be
+    arranged in a strict hierarchy, so it's not clear where in that
+    site-specific hierarchy to put these type of settings. Profiles do
+    have the advantage of being easily queryable and even editable by
+    an administrator.
 
-	Preferences, OTOH, require beginning and ending a zope.security
-	interaction to gain access to. This is complicated to do in normal
-	request processing, and not recommended. However, for an action
-	that might need to send email to tens or hundreds of interested
-	parties, it wouldn't be recommended to do that in
-	request-processing code anyway. Instead, the request processing
-	code should do nothing more then enqueue the event somewhere, and
-	a different process should process this queue, one where beginning
-	and ending interactions should be substantially simpler.
-	"""
-	taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+    Preferences, OTOH, require beginning and ending a zope.security
+    interaction to gain access to. This is complicated to do in normal
+    request processing, and not recommended. However, for an action
+    that might need to send email to tens or hundreds of interested
+    parties, it wouldn't be recommended to do that in
+    request-processing code anyway. Instead, the request processing
+    code should do nothing more then enqueue the event somewhere, and
+    a different process should process this queue, one where beginning
+    and ending interactions should be substantially simpler.
+    """
+    taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
 
-	send_me_push_notifications = Bool(title="Enable/disable all push notifications",
-								 	  description="Overrides all specific types of push notifications",
-									  default=True)
+    send_me_push_notifications = Bool(title=u"Enable/disable all push notifications",
+                                      description=u"Overrides all specific types of push notifications",
+                                      default=True)
+
 
 class IEmailPushNotificationSettings(Interface):
-	"""
-	Push-notification settings specific to email.
+    """
+    Push-notification settings specific to email.
 
-	The user's profile field for email address will generally be used; settings
-	defined here are related to when and what to send.
-	"""
-	taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+    The user's profile field for email address will generally be used; settings
+    defined here are related to when and what to send.
+    """
+    taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
 
-	email_a_summary_of_interesting_changes = Bool(title="Send a summary of notable activity I may be interested in",
-											 	  description="Control the sending of an email digest of activity/changes",
-												  default=True)
+    email_a_summary_of_interesting_changes = Bool(title=u"Send a summary of notable activity I may be interested in",
+                                                  description=u"Control the sending of an email digest of activity/changes",
+                                                  default=True)

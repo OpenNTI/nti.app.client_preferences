@@ -1,47 +1,51 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
 
-
-.. $Id$
-"""
-
-from __future__ import print_function, unicode_literals, absolute_import, division
+from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
+
+# disable: accessing protected members, too many methods
+# pylint: disable=W0212,R0904
 
 logger = __import__('logging').getLogger(__name__)
 
+import zope.testing.cleanup
+
 from nti.testing.layers import ZopeComponentLayer
 from nti.testing.layers import ConfiguringLayerMixin
-import zope.testing.cleanup
-from nti.dataserver.tests.mock_dataserver import DataserverLayerTest
+
 from nti.dataserver.tests.mock_dataserver import DSInjectorMixin
+from nti.dataserver.tests.mock_dataserver import DataserverLayerTest
+
 
 class PreferenceLayer(ZopeComponentLayer,
-					  ConfiguringLayerMixin,
-					  DSInjectorMixin):
+                      ConfiguringLayerMixin,
+                      DSInjectorMixin):
 
-	set_up_packages = ('nti.dataserver',
-					   'nti.app.client_preferences',
-					   ('test_preferences_views.zcml', 'nti.app.client_preferences.tests'),)
+    set_up_packages = ('nti.dataserver',
+                       'nti.app.client_preferences',
+                       ('test_preferences_views.zcml', 'nti.app.client_preferences.tests'),)
 
-	@classmethod
-	def setUp(cls):
-		cls.setUpPackages()
+    @classmethod
+    def setUp(cls):
+        cls.setUpPackages()
 
-	@classmethod
-	def tearDown(cls):
-		cls.tearDownPackages()
-		zope.testing.cleanup.cleanUp()
+    @classmethod
+    def tearDown(cls):
+        cls.tearDownPackages()
+        zope.testing.cleanup.cleanUp()
 
-	@classmethod
-	def testSetUp(cls):
-		pass
+    @classmethod
+    def testSetUp(cls):
+        pass
 
-	@classmethod
-	def testTearDown(cls):
-		pass
+    @classmethod
+    def testTearDown(cls):
+        pass
+
 
 import unittest
+
+
 class PreferenceLayerTest(DataserverLayerTest):
-	layer = PreferenceLayer
+    layer = PreferenceLayer
