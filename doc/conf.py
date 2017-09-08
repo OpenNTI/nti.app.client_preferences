@@ -105,8 +105,8 @@ html_static_path = ['_static']
 
 # -- Options for HTMLHelp output ------------------------------------------
 
-# Output file app.client_preferences name for HTML help builder.
-htmlhelp_appclientpreferencesname = 'ntiappclientpreferencesdoc'
+# Output file base name for HTML help builder.
+htmlhelp_basename = 'ntiappclientpreferencesdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
