@@ -106,7 +106,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file app.client_preferences name for HTML help builder.
-htmlhelp_app.client_preferencesname = 'ntiapp.client_preferencesdoc'
+htmlhelp_appclientpreferencesname = 'ntiappclientpreferencesdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -133,7 +133,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'ntiapp.client_preferences.tex', u'nti.app.client_preferences Documentation',
+    (master_doc, 'ntiappclientpreferences.tex', u'nti.app.client_preferences Documentation',
      u'NextThought', 'manual'),
 ]
 
@@ -143,7 +143,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'ntiapp.client_preferences', u'nti.app.client_preferences Documentation',
+    (master_doc, 'ntiappclientpreferences', u'nti.app.client_preferences Documentation',
      [author], 1)
 ]
 
@@ -154,8 +154,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'ntiapp.client_preferences', u'nti.app.client_preferences Documentation',
-     author, 'ntiapp.client_preferences', 'One line description of project.',
+    (master_doc, 'ntiappclientpreferences', u'nti.app.client_preferences Documentation',
+     author, 'ntiappclientpreferences', 'One line description of project.',
      'Miscellaneous'),
 ]
 
