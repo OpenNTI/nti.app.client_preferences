@@ -12,11 +12,11 @@ logger = __import__('logging').getLogger(__name__)
 
 generation = 2
 
+from zope import interface
+
 from zope.generations.generations import SchemaManager as BaseSchemaManager
 
 from zope.generations.interfaces import IInstallableSchemaManager
-
-from zope import interface
 
 
 @interface.implementer(IInstallableSchemaManager)
@@ -32,8 +32,4 @@ class SchemaManager(BaseSchemaManager):
             package_name='nti.app.client_preferences.generations')
 
     def install(self, context):
-        # Nothing to do initially.
-        # If there is something to do at a later generation,
-        # the super class would default to calling
-        # the 'evolve' method in this module.
         pass
