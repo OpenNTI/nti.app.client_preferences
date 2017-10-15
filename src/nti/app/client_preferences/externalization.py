@@ -22,10 +22,9 @@ See :class:`PreferenceGroupObjectIO` for more information.
 .. $Id$
 """
 
-from __future__ import print_function, absolute_import, division
-__docformat__ = "restructuredtext en"
-
-logger = __import__('logging').getLogger(__name__)
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
 from zope import component
 from zope import interface
@@ -42,6 +41,8 @@ from nti.externalization.interfaces import StandardExternalFields
 from nti.externalization.internalization import update_from_external_object
 
 from nti.app.client_preferences.interfaces import TAG_EXTERNAL_PREFERENCE_GROUP
+
+logger = __import__('logging').getLogger(__name__)
 
 
 def _check_read(schema, allow=('read', 'write')):

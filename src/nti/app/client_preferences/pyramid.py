@@ -6,20 +6,21 @@ Support for viewing and updating preferences.
 .. $Id$
 """
 
-from __future__ import print_function, absolute_import, division
-__docformat__ = "restructuredtext en"
-
-logger = __import__('logging').getLogger(__name__)
-
-from pyramid.view import view_config
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
 from zope.preference.interfaces import IPreferenceGroup
+
+from pyramid.view import view_config
 
 from nti.app.base.abstract_views import AbstractAuthenticatedView
 
 from nti.app.externalization.view_mixins import ModeledContentUploadRequestUtilsMixin
 
 from nti.dataserver import authorization as nauth
+
+logger = __import__('logging').getLogger(__name__)
 
 
 @view_config(route_name='objects.generic.traversal',

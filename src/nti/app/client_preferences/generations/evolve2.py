@@ -6,19 +6,16 @@ Generation 2 evolver, which migrates user preferences
 .. $Id$
 """
 
-from __future__ import print_function, absolute_import, division
-__docformat__ = "restructuredtext en"
-
-logger = __import__('logging').getLogger(__name__)
-
-generation = 2
-
-import zope.intid
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
 from zope import component
 from zope import interface
 
 from zope.component.hooks import site, setHooks
+
+from zope.intid.interfaces import IIntIds
 
 from zope.preference.interfaces import IUserPreferences
 
@@ -27,11 +24,13 @@ from zope.security.interfaces import IParticipation
 
 from zope.security.management import newInteraction, endInteraction
 
-from zc import intid as zc_intid
-
 from nti.contentfragments.interfaces import PlainTextContentFragment
 
 from nti.dataserver.interfaces import IUser
+
+generation = 2
+
+logger = __import__('logging').getLogger(__name__)
 
 
 @interface.implementer(IParticipation)
@@ -66,8 +65,7 @@ def migrate_preferences(user):
         if current and current in presence:
             status = presence.get(current, {}).get('status')
             if status:
-                root_prefs.ChatPresence.Active.status = PlainTextContentFragment(
-                    status)
+                root_prefs.ChatPresence.Active.status = PlainTextContentFragment(status)
 
         for name in ('Available', 'Away', 'DND'):
             status = presence.get(name.lower(), {}).get('status')
@@ -85,9 +83,8 @@ def evolve(context):
     ds_folder = context.connection.root()['nti.dataserver']
     lsm = ds_folder.getSiteManager()
 
-    ds_intid = lsm.getUtility(provided=zope.intid.IIntIds)
-    component.provideUtility(ds_intid, zope.intid.IIntIds)
-    component.provideUtility(ds_intid, zc_intid.IIntIds)
+    ds_intid = lsm.getUtility(provided=IIntIds)
+    component.provideUtility(ds_intid, IIntIds)
 
     with site(ds_folder):
         assert component.getSiteManager() == ds_folder.getSiteManager(), \
@@ -97,5 +94,4 @@ def evolve(context):
             if IUser.providedBy(user):
                 migrate_preferences(user)
 
-    component.getGlobalSiteManager().unregisterUtility(ds_intid, zope.intid.IIntIds)
-    component.getGlobalSiteManager().unregisterUtility(ds_intid, zc_intid.IIntIds)
+    component.getGlobalSiteManager().unregisterUtility(ds_intid, IIntIds)
