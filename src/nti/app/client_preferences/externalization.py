@@ -31,6 +31,8 @@ from zope import interface
 
 from zope.preference.interfaces import IPreferenceGroup
 
+from nti.app.client_preferences.interfaces import TAG_EXTERNAL_PREFERENCE_GROUP
+
 from nti.externalization.datastructures import InterfaceObjectIO
 
 from nti.externalization.externalization import to_external_object
@@ -39,10 +41,6 @@ from nti.externalization.interfaces import IInternalObjectIO
 from nti.externalization.interfaces import StandardExternalFields
 
 from nti.externalization.internalization import update_from_external_object
-
-from nti.app.client_preferences.interfaces import TAG_EXTERNAL_PREFERENCE_GROUP
-
-logger = __import__('logging').getLogger(__name__)
 
 
 def _check_read(schema, allow=('read', 'write')):
@@ -95,7 +93,9 @@ class PreferenceGroupObjectIO(InterfaceObjectIO):
 
     @property
     def __external_resolvers__(self):
-        "Sub-groups are resolved to the actual utility, if it exists and is writable"
+        """
+        Sub-groups are resolved to the actual utility, if it exists and is writable
+        """
         # We have to update them from the external value as we
         # get them because simply assigning the attribute on the PrefGroup
         # does nothing. Because of this, we don't even need to include
@@ -105,8 +105,9 @@ class PreferenceGroupObjectIO(InterfaceObjectIO):
         def _make_resolver(local_name):
             return lambda _x, _z, local_data: update_from_external_object(getattr(context, local_name), local_data)
 
-        return {local_name: _make_resolver(local_name)
-                for local_name in context.keys()}
+        return {
+            local_name: _make_resolver(local_name) for local_name in context.keys()
+        }
 
     # Note: _ext_setattr winds up doing double-validation (because the
     # PrefGroup does so as well). But it does add the security of not

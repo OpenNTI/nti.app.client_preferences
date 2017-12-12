@@ -10,9 +10,9 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import absolute_import
 
-from zope.preference.interfaces import IPreferenceGroup
-
 from pyramid.view import view_config
+
+from zope.preference.interfaces import IPreferenceGroup
 
 from nti.app.base.abstract_views import AbstractAuthenticatedView
 
@@ -34,7 +34,7 @@ def PreferencesGetView(request):
     # Because we load the ++preference++ traversal namespace,
     # this is available at /path/to/principal/++preference++
     # (and sub-paths, nice! for automatic fetch-in-part)
-    # TODO: We should supply etag and/or last modified for this
+    # We should supply etag and/or last modified for this
     # (does the default etag kick in?)
     return request.context
 

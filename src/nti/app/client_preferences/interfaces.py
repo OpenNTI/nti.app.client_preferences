@@ -43,6 +43,8 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import absolute_import
 
+# pylint: disable=inherit-non-class,no-value-for-parameter
+
 from zope.interface import Interface
 
 from zope.interface.interface import taggedValue
@@ -147,7 +149,7 @@ for iface in IAvailableChatPresenceSettings, IAwayChatPresenceSettings, IDNDChat
         if iface[name].__dict__['default'] != iface[name].default:
             del iface[name].defaultFactory
     iface.changed(iface)
-del iface
+del iface  # pylint: disable=undefined-loop-variable
 
 
 class IPushNotificationSettings(Interface):
