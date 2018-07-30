@@ -52,7 +52,6 @@ def _check_read(schema, allow=('read', 'write')):
     raise ValueError('Unreadable schema')
 
 
-@interface.implementer(IInternalObjectIO)
 @component.adapter(IPreferenceGroup)
 class PreferenceGroupObjectIO(InterfaceObjectIO):
     """
