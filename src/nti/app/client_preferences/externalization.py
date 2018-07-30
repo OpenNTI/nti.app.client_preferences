@@ -27,7 +27,6 @@ from __future__ import print_function
 from __future__ import absolute_import
 
 from zope import component
-from zope import interface
 
 from zope.preference.interfaces import IPreferenceGroup
 
@@ -37,7 +36,6 @@ from nti.externalization.datastructures import InterfaceObjectIO
 
 from nti.externalization.externalization import to_external_object
 
-from nti.externalization.interfaces import IInternalObjectIO
 from nti.externalization.interfaces import StandardExternalFields
 
 from nti.externalization.internalization import update_from_external_object
