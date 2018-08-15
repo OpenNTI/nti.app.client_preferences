@@ -205,3 +205,6 @@ class IEmailPushNotificationSettings(Interface):
     email_a_summary_of_interesting_changes = Bool(title=u"Send a summary of notable activity I may be interested in",
                                                   description=u"Control the sending of an email digest of activity/changes",
                                                   default=True)
+
+    immediate_threadable_reply = Bool(title=u"Send notification to me when others replied to my comment or note",
+                                      default=False)
