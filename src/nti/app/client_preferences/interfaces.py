@@ -208,3 +208,6 @@ class IEmailPushNotificationSettings(Interface):
 
     immediate_threadable_reply = Bool(title=u"Send notification to me when others replied to my comment or note",
                                       default=False)
+
+    notify_on_mention = Bool(title=u"Send notification to me when others mention me",
+                             default=True)
