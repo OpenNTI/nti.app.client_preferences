@@ -67,6 +67,7 @@ class TestPreferencesViews(ApplicationLayerTest):
                                                                    'Email': {'Class': 'Preference_PushNotifications_Email',
                                                                              'MimeType': 'application/vnd.nextthought.preference.pushnotifications.email',
                                                                              'email_a_summary_of_interesting_changes': True,
+                                                                             'notify_on_mention': True,
                                                                              'immediate_threadable_reply': False},
                                                                    'MimeType': 'application/vnd.nextthought.preference.pushnotifications',
                                                                    'send_me_push_notifications': True})}))
