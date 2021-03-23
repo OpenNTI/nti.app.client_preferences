@@ -102,4 +102,10 @@
 		title="Email Notification Settings"
 		schema=".interfaces.IEmailPushNotificationSettings" />
 
+	<preferenceGroup
+        id="Library"
+        title="Library Settings"
+        schema=".interfaces.ILibrarySettings"
+        category="true" />
+
 </configure>

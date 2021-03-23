@@ -50,6 +50,7 @@ from zope.interface import Interface
 from zope.interface.interface import taggedValue
 
 from nti.schema.field import Bool
+from nti.schema.field import ValidTextLine
 
 TAG_EXTERNAL_PREFERENCE_GROUP = '__external_preference_group__'
 
@@ -211,3 +212,18 @@ class IEmailPushNotificationSettings(Interface):
 
     notify_on_mention = Bool(title=u"Send notification to me when others mention me",
                              default=True)
+
+
+class ILibrarySettings(Interface):
+    """
+    Settings specific to the user's library.
+    """
+    taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+
+    courses_sort = ValidTextLine(title=u"Course sort preference",
+                                 description=u"How to sort courses in the user's library",
+                                 required=False)
+
+    admin_courses_sort = ValidTextLine(title=u"Admin course sort preference",
+                                       description=u"How admin courses are sorted in the user's library",
+                                       required=False)
