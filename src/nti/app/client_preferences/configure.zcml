@@ -108,4 +108,34 @@
         schema=".interfaces.ILibrarySettings"
         category="true" />
 
+	<preferenceGroup
+        id="Sort"
+        title="Sort Settings"
+        schema=".interfaces.ISortGroupSettings"
+        category="true" />
+
+	<preferenceGroup
+        id="Sort.administeredCourses"
+        title="Sort Settings for administered courses"
+        schema=".interfaces.ISortSettings"
+        category="true" />
+
+	<preferenceGroup
+        id="Sort.courses"
+        title="Sort Settings for courses"
+        schema=".interfaces.ISortSettings"
+        category="true" />
+
+	<preferenceGroup
+        id="Sort.books"
+        title="Sort Settings for books"
+        schema=".interfaces.ISortSettings"
+        category="true" />
+
+	<preferenceGroup
+        id="Sort.communities"
+        title="Sort Settings for communities"
+        schema=".interfaces.ISortSettings"
+        category="true" />
+
 </configure>
