@@ -61,7 +61,7 @@ class TestPreferencesViews(ApplicationLayerTest):
                                                          u'MimeType': u'application/vnd.nextthought.preference.library',
                                                          u'admin_courses_sort': None,
                                                          u'courses_sort': None}),
-                                 'Sort': has_entries({u'Class': u'Preference_SortGroup',
+                                 'Sort': has_entries({u'Class': u'Preference_Sort',
                                                          u'MimeType': u'application/vnd.nextthought.preference.sortgroup',
                                                          u'administeredCourses': has_entry('sortOn', None),
                                                          u'courses': has_entry('sortOn', None),

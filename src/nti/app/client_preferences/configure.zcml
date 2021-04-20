@@ -117,25 +117,21 @@
 	<preferenceGroup
         id="Sort.administeredCourses"
         title="Sort Settings for administered courses"
-        schema=".interfaces.ISortSettings"
-        category="true" />
+        schema=".interfaces.ISortSettings" />
 
 	<preferenceGroup
         id="Sort.courses"
         title="Sort Settings for courses"
-        schema=".interfaces.ISortSettings"
-        category="true" />
+        schema=".interfaces.ISortSettings" />
 
 	<preferenceGroup
         id="Sort.books"
         title="Sort Settings for books"
-        schema=".interfaces.ISortSettings"
-        category="true" />
+        schema=".interfaces.ISortSettings" />
 
 	<preferenceGroup
         id="Sort.communities"
         title="Sort Settings for communities"
-        schema=".interfaces.ISortSettings"
-        category="true" />
+        schema=".interfaces.ISortSettings" />
 
 </configure>
