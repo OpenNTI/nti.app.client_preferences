@@ -115,13 +115,13 @@
         category="true" />
 
 	<preferenceGroup
-        id="Sort.administeredCourses"
-        title="Sort Settings for administered courses"
+        id="Sort.courses"
+        title="Sort Settings for courses"
         schema=".interfaces.ISortSettings" />
 
 	<preferenceGroup
-        id="Sort.courses"
-        title="Sort Settings for courses"
+        id="Sort.courses.administered"
+        title="Sort Settings for administered courses"
         schema=".interfaces.ISortSettings" />
 
 	<preferenceGroup
