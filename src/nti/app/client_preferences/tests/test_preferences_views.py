@@ -61,6 +61,14 @@ class TestPreferencesViews(ApplicationLayerTest):
                                                          u'MimeType': u'application/vnd.nextthought.preference.library',
                                                          u'admin_courses_sort': None,
                                                          u'courses_sort': None}),
+                                 'Sort': has_entries({u'Class': u'Preference_Sort',
+                                                         u'MimeType': u'application/vnd.nextthought.preference.sortgroup',
+                                                         u'courses': has_entries({
+                                                             u'administered': has_entry(u'sortOn', None),
+                                                             u'sortOn', None
+                                                         }),
+                                                         u'books': has_entry(u'sortOn', None),
+                                                         u'communities': has_entry(u'sortOn', None)}),
                                  'ChatPresence': has_entries({'Class': 'Preference_ChatPresence',
                                                               'MimeType': 'application/vnd.nextthought.preference.chatpresence',
                                                               'Away': has_entry('status', 'Away'),

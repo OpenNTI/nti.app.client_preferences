@@ -227,3 +227,22 @@ class ILibrarySettings(Interface):
     admin_courses_sort = ValidTextLine(title=u"Admin course sort preference",
                                        description=u"How admin courses are sorted in the user's library",
                                        required=False)
+
+class ISortSettings(Interface):
+    """
+    Sort Settings
+    """
+    taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
+
+    sortOn = ValidTextLine(title=u"Sort preference",
+                           description=u"What to sort on.",
+                           required=True)
+ 
+    sortDirection = ValidTextLine(title=u"Sort Direction",
+                                  description=u"Direction on which to sort. Ascending or Descending",
+                                  required=True)
+class ISortGroupSettings(Interface):
+    """
+    Settings to store sorts on various UI views.
+    """
+    taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
