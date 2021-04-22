@@ -57,10 +57,6 @@ class TestPreferencesViews(ApplicationLayerTest):
                                                         'MimeType': 'application/vnd.nextthought.preference.webapp',
                                                         'preferFlashVideo': False,
                                                         'useHighContrast': False}),
-                                 'Library': has_entries({u'Class': u'Preference_Library',
-                                                         u'MimeType': u'application/vnd.nextthought.preference.library',
-                                                         u'admin_courses_sort': None,
-                                                         u'courses_sort': None}),
                                  'Sort': has_entries({u'Class': u'Preference_Sort',
                                                          u'MimeType': u'application/vnd.nextthought.preference.sortgroup',
                                                          u'courses': has_entries({

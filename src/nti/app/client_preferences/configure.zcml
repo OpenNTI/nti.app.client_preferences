@@ -103,12 +103,6 @@
 		schema=".interfaces.IEmailPushNotificationSettings" />
 
 	<preferenceGroup
-        id="Library"
-        title="Library Settings"
-        schema=".interfaces.ILibrarySettings"
-        category="true" />
-
-	<preferenceGroup
         id="Sort"
         title="Sort Settings"
         schema=".interfaces.ISortGroupSettings"
