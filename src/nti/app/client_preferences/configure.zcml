@@ -14,9 +14,6 @@
 	<include package="zope.i18n" file="meta.zcml" />
 	<include package="zope.i18n" />
 
-	<!--
-	FIXME: Right now, it is loading us, but we should be including it
-	-->
 	<include package="nti.externalization" />
 
 	<i18n:registerTranslations directory="locales" />
@@ -101,12 +98,6 @@
 		id="PushNotifications.Email"
 		title="Email Notification Settings"
 		schema=".interfaces.IEmailPushNotificationSettings" />
-
-	<preferenceGroup
-        id="Library"
-        title="Library Settings"
-        schema=".interfaces.ILibrarySettings"
-        category="true" />
 
 	<preferenceGroup
         id="Sort"

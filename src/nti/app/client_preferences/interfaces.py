@@ -214,20 +214,6 @@ class IEmailPushNotificationSettings(Interface):
                              default=True)
 
 
-class ILibrarySettings(Interface):
-    """
-    Settings specific to the user's library.
-    """
-    taggedValue(TAG_EXTERNAL_PREFERENCE_GROUP, 'write')
-
-    courses_sort = ValidTextLine(title=u"Course sort preference",
-                                 description=u"How to sort courses in the user's library",
-                                 required=False)
-
-    admin_courses_sort = ValidTextLine(title=u"Admin course sort preference",
-                                       description=u"How admin courses are sorted in the user's library",
-                                       required=False)
-
 class ISortSettings(Interface):
     """
     Sort Settings
@@ -237,7 +223,7 @@ class ISortSettings(Interface):
     sortOn = ValidTextLine(title=u"Sort preference",
                            description=u"What to sort on.",
                            required=True)
- 
+
     sortDirection = ValidTextLine(title=u"Sort Direction",
                                   description=u"Direction on which to sort. Ascending or Descending",
                                   required=True)
