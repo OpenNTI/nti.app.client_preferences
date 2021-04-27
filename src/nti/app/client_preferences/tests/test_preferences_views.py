@@ -58,7 +58,7 @@ class TestPreferencesViews(ApplicationLayerTest):
                                                         'preferFlashVideo': False,
                                                         'useHighContrast': False}),
                                  'Sort': has_entries({u'Class': u'Preference_Sort',
-                                                         u'MimeType': u'application/vnd.nextthought.preference.sortgroup',
+                                                         u'MimeType': u'application/vnd.nextthought.preference.sort',
                                                          u'courses': has_entries({
                                                              u'administered': has_entry(u'sortOn', None),
                                                              u'sortOn': None
