@@ -222,10 +222,11 @@ class ISortSettings(Interface):
     sortOn = ValidTextLine(title=u"Sort preference",
                            description=u"What to sort on.",
                            required=False)
- 
-    sortDirection = ValidTextLine(title=u"Sort Direction",
-                                  description=u"Direction on which to sort. Ascending or Descending",
-                                  required=False)
+
+    sortOrder = ValidTextLine(title=u"Sort order",
+                              description=u"Direction on which to sort. Ascending or Descending",
+                              required=False)
+
 class ISortGroupSettings(Interface):
     """
     Settings to store sorts on various UI views.
